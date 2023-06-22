@@ -80,6 +80,9 @@ def process_bbox(bbox, img_width, img_height, do_sanitize=True, extend_ratio=1.2
     bbox = bbox.astype(np.float32)
     return bbox
 
+
+
+
 def get_aug_config():
     scale_factor = 0.25
     rot_factor = 30

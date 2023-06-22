@@ -41,7 +41,9 @@ class InterHand26M(torch.utils.data.Dataset):
         
     def load_data(self):
         # load annotation
+        
         db = COCO(osp.join(self.annot_path, self.data_split, 'InterHand2.6M_' + self.data_split + '_data.json'))
+
         with open(osp.join(self.annot_path, self.data_split, 'InterHand2.6M_' + self.data_split + '_camera.json')) as f:
             cameras = json.load(f)
         with open(osp.join(self.annot_path, self.data_split, 'InterHand2.6M_' + self.data_split + '_joint_3d.json')) as f:
@@ -473,4 +475,3 @@ class InterHand26M(torch.utils.data.Dataset):
         print('MPJPE for single hand sequences: %.2f mm' % (np.mean(eval_result['mpjpe_sh'])))
         print('MPJPE for interacting hand sequences: %.2f mm' % (np.mean(eval_result['mpjpe_ih'])))
         print()
-

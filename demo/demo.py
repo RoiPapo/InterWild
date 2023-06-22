@@ -22,6 +22,10 @@ import torch.backends.cudnn as cudnn
 sys.path.insert(0, osp.join('..', 'main'))
 sys.path.insert(0, osp.join('..', 'data'))
 sys.path.insert(0, osp.join('..', 'common'))
+sys.path.insert(0, osp.join('.', 'main'))
+sys.path.insert(0, osp.join('.', 'data'))
+sys.path.insert(0, osp.join('.', 'common'))
+sys.path.insert(0, osp.join('.', 'demo'))
 from config import cfg
 from model import get_model
 from utils.preprocessing import load_img, process_bbox, generate_patch_image, get_iou
@@ -29,10 +33,11 @@ from utils.vis import save_obj, render_mesh_orthogonal
 from utils.mano import mano
 
 def parse_args():
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', type=str, dest='gpu_ids')
     args = parser.parse_args()
-
+    args.gpu_ids='0'
     assert args.gpu_ids, print("Please set proper gpu ids")
 
     if '-' in args.gpu_ids:
@@ -48,7 +53,7 @@ cfg.set_args(args.gpu_ids)
 cudnn.benchmark = True
 
 # snapshot load
-model_path = './snapshot_6.pth'
+model_path = '/data/home/roipapo/InterWild/common/utils/human_model_files/snapshot_6.pth'
 assert osp.exists(model_path), 'Cannot find model at ' + model_path
 print('Load checkpoint from {}'.format(model_path))
 model = get_model('test')
@@ -58,7 +63,7 @@ model.load_state_dict(ckpt['network'], strict=False)
 model.eval()
 
 # prepare save paths
-input_img_path = './images'
+input_img_path = '/data/home/roipapo/HandsDetection/images/interhand26M/train/temp'
 box_save_path = './boxes'
 mesh_save_path = './meshes'
 param_save_path = './params'

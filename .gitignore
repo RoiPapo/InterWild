@@ -1,0 +1,22 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore virtual environment directories
+venv/
+env/
+
+# Ignore log files
+*.log
+
+# Ignore cache directories
+__pycache__/
+
+# Ignore IDE and editor-specific files
+.idea/
+.vscode/
+
+*.jpg
+*.png
+*.pth
+*.json
+*.obj

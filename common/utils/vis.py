@@ -153,7 +153,7 @@ def render_mesh_orthogonal(mesh, face, cam_param, render_shape, hand_type):
     if hand_type == 'right':
         color = ((1.0, 0.0, 0.0),)
     else:
-        color = ((0.0, 1.0, 0.0),)
+        color = ((1.0, 0.0, 0.0),)
     materials = Materials(
 	device='cuda',
         ambient_color=((0.5,0.5,0.5),),

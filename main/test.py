@@ -5,6 +5,8 @@
 # LICENSE file in the root directory of this source tree.
 # 
 
+import sys
+import cv2
 import torch
 import argparse
 from tqdm import tqdm
@@ -12,12 +14,17 @@ import numpy as np
 import torch.backends.cudnn as cudnn
 from config import cfg
 from base import Tester
+import os.path as osp
+
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', type=str, dest='gpu_ids')
     parser.add_argument('--test_epoch', type=str, dest='test_epoch')
     args = parser.parse_args()
+    args.gpu_ids= '1'
+    args.test_epoch = 6
 
     if not args.gpu_ids:
         assert 0, "Please set propoer gpu ids"
@@ -48,11 +55,19 @@ def main():
         # forward
         with torch.no_grad():
             out = tester.model(inputs, targets, meta_info, 'test')
-        
+            print(meta_info)
+            print(out)
+            exit()
         # save output
         out = {k: v.cpu().numpy() for k,v in out.items()}
         for k,v in out.items(): batch_size = out[k].shape[0]
         out = [{k: v[bid] for k,v in out.items()} for bid in range(batch_size)]
+        # print(out[0].keys())
+        # print(out[0]["img"].shape)
+        # imgt = np.transpose(out[0]["img"], (1, 2, 0)) 
+        # cv2.imwrite('tes.jpg',imgt )
+        # exit()
+        
         
         # evaluate
         cur_eval_result = tester._evaluate(out, cur_sample_idx)
